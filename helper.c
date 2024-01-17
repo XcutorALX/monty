@@ -33,7 +33,9 @@ int readCode(info_t *info)
 		info->command = tokenize(lineptr, delim);
 		info->line = line;
 
-		runCommand(info);
+		if (info->command != NULL)
+			runCommand(info);
+
 		free(lineptr);
 		lineptr = NULL;
 		line++;
@@ -121,11 +123,9 @@ void pall(stack_t **stack, unsigned int line_number)
 {
 	stack_t *current;
 
-	if (info->command[1] != NULL)
-	{
-		fprintf(stderr, "L%u: usage: pall\n", line_number);
-		exit(EXIT_FAILURE);
-	}
+	if (info->command == NULL)
+		fprintf(stderr, "Error: L%u\n", line_number);
+
 	if (*stack == NULL)
 		return;
 
