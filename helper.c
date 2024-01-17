@@ -68,7 +68,7 @@ int runCommand(info_t *info)
 			return (0);
 		}
 	}
-	fprintf(stderr, "L%d: unknown instruction <opcode>", info->line);
+	fprintf(stderr, "L%d: unknown instruction %s", info->line, info->command[0]);
 	return (-1);
 }
 
