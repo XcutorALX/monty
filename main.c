@@ -18,7 +18,7 @@ int main(int argc, char **argv)
 	info_t progInfo;
 
 	info = &progInfo;
-	if (argc < 2)
+	if (argc != 2)
 	{
 		fprintf(stderr, "USAGE: monty file\n");
 		exit(EXIT_FAILURE);

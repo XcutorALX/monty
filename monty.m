@@ -4,4 +4,3 @@ push      10
 push   15
   push      25
   pall
-push
