@@ -79,7 +79,6 @@ int runCommand(info_t *info);
 int readCode(info_t *info);
 int getLine(char **lineptr, size_t *buffersize, FILE *stream);
 char **tokenize(char *str, char *delim);
-char *_strtok(char *str, char *delim);
 int _atoi(char *str);
 int _pow(long int x, long int y);
 
