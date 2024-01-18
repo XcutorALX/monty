@@ -38,6 +38,7 @@ int readCode(info_t *info)
 
 		free(lineptr);
 		lineptr = NULL;
+		n = 0;
 		line++;
 	}
 	return (0);
@@ -58,6 +59,7 @@ int runCommand(info_t *info)
 		{"push", &push},
 		{"pall", &pall},
 		{"pint", &pint},
+		{"pop", &pop},
 		{NULL}
 	};
 
@@ -70,7 +72,7 @@ int runCommand(info_t *info)
 		}
 	}
 	fprintf(stderr, "L%d: unknown instruction %s", info->line, info->command[0]);
-	return (-1);
+	exit(EXIT_FAILURE);
 }
 
 /**

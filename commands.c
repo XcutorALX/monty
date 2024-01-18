@@ -24,3 +24,28 @@ void pint(stack_t **stack, unsigned int line_number)
 
 	printf("%d\n", current->n);
 }
+
+/**
+ * pop - removes the top element of the stack
+ *
+ * @line_number: the current line
+ * @stack: the program stack
+ */
+void pop(stack_t **stack, unsigned int line_number)
+{
+	stack_t *current;
+
+	if (*stack == NULL)
+	{
+		fprintf(stderr, "L%u: can't pop an empty stack\n", line_number);
+		exit(EXIT_FAILURE);
+	}
+
+	current = *stack;
+
+	while (current->next != NULL)
+		current = current->next;
+
+	current->prev->next = NULL;
+	free(current);
+}
