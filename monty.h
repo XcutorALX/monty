@@ -84,5 +84,6 @@ int getLine(char **lineptr, size_t *buffersize, FILE *stream);
 char **tokenize(char *str, char *delim);
 int _atoi(char *str);
 int _pow(long int x, long int y);
+void freeStack(void);
 
 #endif

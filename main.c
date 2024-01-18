@@ -32,5 +32,6 @@ int main(int argc, char **argv)
 	info->allocatedMem = NULL;
 
 	readCode(info);
+	freeStack();
 	return (0);
 }

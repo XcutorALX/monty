@@ -25,6 +25,7 @@ int readCode(info_t *info)
 	if (stream == NULL)
 	{
 		fprintf(stderr, "Error: Can't open file: %s\n", info->args[1]);
+		freeStack();
 		exit(EXIT_FAILURE);
 	}
 
@@ -72,6 +73,7 @@ int runCommand(info_t *info)
 		}
 	}
 	fprintf(stderr, "L%d: unknown instruction %s", info->line, info->command[0]);
+	freeStack();
 	exit(EXIT_FAILURE);
 }
 
@@ -91,6 +93,7 @@ void push(stack_t **stack, unsigned int line_number)
 	if (info->command[1] == NULL)
 	{
 		fprintf(stderr, "L%u: usage: push integer\n", line_number);
+		freeStack();
 		exit(EXIT_FAILURE);
 	}
 
@@ -99,6 +102,7 @@ void push(stack_t **stack, unsigned int line_number)
 		if (!(info->command[1][i] >= '0' && info->command[1][i] <= '9'))
 		{
 			fprintf(stderr, "L%u: usage: push integer\n", line_number);
+			freeStack();
 			exit(EXIT_FAILURE);
 		}
 	}
@@ -136,7 +140,11 @@ void pall(stack_t **stack, unsigned int line_number)
 	stack_t *current;
 
 	if (info->command == NULL)
+	{
 		fprintf(stderr, "Error: L%u\n", line_number);
+		freeStack();
+		exit(EXIT_FAILURE);
+	}
 
 	if (*stack == NULL)
 		return;

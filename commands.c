@@ -49,3 +49,24 @@ void pop(stack_t **stack, unsigned int line_number)
 	current->prev->next = NULL;
 	free(current);
 }
+
+/**
+ * freeStack - frees the stack
+ */
+
+void freeStack(void)
+{
+	stack_t *current, *temp;
+
+	current = info->programStack;
+	
+	if (current == NULL)
+		return;
+
+	while (current != NULL)
+	{
+		temp = current;
+		current = current->next;
+		free(temp);
+	}
+}
