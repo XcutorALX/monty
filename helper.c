@@ -85,16 +85,25 @@ int runCommand(info_t *info)
 void push(stack_t **stack, unsigned int line_number)
 {
 	stack_t *current, *new;
-	int argument;
+	int argument, i;
 
 	info->errorno = 0;
-	argument = _atoi(info->command[1]);
-	if (info->errorno == -1)
+	if (info->command[1] == NULL)
 	{
 		fprintf(stderr, "L%u: usage: push integer\n", line_number);
 		exit(EXIT_FAILURE);
 	}
 
+	for (i = 0; info->command[1][i] != '\0'; i++)
+	{
+		if (!(info->command[1][i] >= '0' && info->command[1][i] <= '9'))
+		{
+			fprintf(stderr, "L%u: usage: push integer\n", line_number);
+			exit(EXIT_FAILURE);
+		}
+	}
+
+	argument = atoi(info->command[1]);
 	new = malloc(sizeof(stack_t));
 	if (!new)
 		exit(EXIT_FAILURE);
