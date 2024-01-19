@@ -84,6 +84,7 @@ void swap(stack_t **stack, unsigned int line_number);
 void arit(stack_t **stack, unsigned int line_number);
 void pchar(stack_t **stack, unsigned int line_number);
 void pstr(stack_t **stack, unsigned int line_number);
+void rotl(stack_t **stack, unsigned int line_number);
 int aritHelper(stack_t **second);
 int runCommand(info_t *info);
 int readCode(info_t *info);

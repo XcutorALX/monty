@@ -78,6 +78,7 @@ int runCommand(info_t *info)
 		{"mod", &arit},
 		{"pchar", &pchar},
 		{"pstr", &pstr},
+		{"rotl", &rotl},
 		{NULL}
 	};
 
