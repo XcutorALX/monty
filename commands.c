@@ -38,6 +38,8 @@ void pop(stack_t **stack, unsigned int line_number)
 	if (*stack == NULL)
 	{
 		fprintf(stderr, "L%u: can't pop an empty stack\n", line_number);
+		freeStack();
+		freeMem();
 		exit(EXIT_FAILURE);
 	}
 
@@ -46,6 +48,13 @@ void pop(stack_t **stack, unsigned int line_number)
 	while (current->next != NULL)
 		current = current->next;
 
+	if (current->prev == NULL)
+	{
+		free(current);
+		*stack = NULL;
+		return;
+	}
+	
 	current->prev->next = NULL;
 	free(current);
 }
