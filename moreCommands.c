@@ -34,7 +34,8 @@ void arit(stack_t **stack, unsigned int line_number)
 		freeMem();
 		exit(EXIT_FAILURE);
 	}
-
+	
+	current = *stack;
 	result = aritHelper(&second);
 	if (info->mode == 's')
 		second->next = NULL;
