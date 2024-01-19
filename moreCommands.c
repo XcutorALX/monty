@@ -31,7 +31,6 @@ void arit(stack_t **stack, unsigned int line_number)
 	{
 		fprintf(stderr, "L%u: can't %s, stack too short\n",
 				line_number, operation);
-		freeStack();
 		freeMem();
 		exit(EXIT_FAILURE);
 	}

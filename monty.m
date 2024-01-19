@@ -1,3 +1,2 @@
-push 1
-push 2
-swape
+push 98
+add
