@@ -77,7 +77,9 @@ int runCommand(info_t *info)
 
 	for (i = 0; commands[i].opcode != NULL; i++)
 	{
-		if (strcmp(info->command[0], commands[i].opcode) == 0)
+		if (strcmp(info->command[0], "nop") == 0)
+			return (0);
+		else if (strcmp(info->command[0], commands[i].opcode) == 0)
 		{
 			commands[i].f(&(info->programStack), info->line);
 			return (0);
