@@ -93,7 +93,6 @@ int runCommand(info_t *info)
 	}
 	fprintf(stderr, "L%d: unknown instruction %s\n",
 			info->line, info->command[0]);
-	free(info->command);
 	freeStack();
 	freeMem();
 	exit(EXIT_FAILURE);
