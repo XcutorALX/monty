@@ -148,7 +148,7 @@ void swap(stack_t **stack, unsigned int line_number)
 	int i, temp;
 
 	current = *stack;
-	for (i = 1; current->next != NULL; 
+	for (i = 0; current != NULL; 
 			current = current->next, i++);
 
 	if (i < 2)
@@ -160,6 +160,7 @@ void swap(stack_t **stack, unsigned int line_number)
 		exit(EXIT_FAILURE);
 	}
 
+	current = current->prev;
 	temp = current->n;
 	current->n = current->prev->n;
 	current->prev->n = temp;
