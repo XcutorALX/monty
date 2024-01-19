@@ -75,6 +75,7 @@ int runCommand(info_t *info)
 		{"sub", &arit},
 		{"div", &arit},
 		{"mul", &arit},
+		{"mod", &arit},
 		{NULL}
 	};
 
