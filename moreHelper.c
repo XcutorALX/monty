@@ -18,7 +18,10 @@ void freeStack(void)
 	while (current != NULL)
 	{
 		temp = current;
-		current = current->next;
+		if (info->mode == 's')
+			current = current->prev;
+		else
+			current = current->next;
 		free(temp);
 	}
 }

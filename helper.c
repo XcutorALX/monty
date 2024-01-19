@@ -38,8 +38,8 @@ int readCode(info_t *info)
 		if (info->command != NULL)
 		{
 			addMem(lineptr);
+			addMem(info->command);
 			runCommand(info);
-			free(info->command);
 			info->command = NULL;
 		}
 		else
@@ -93,7 +93,9 @@ int runCommand(info_t *info)
 	}
 	fprintf(stderr, "L%d: unknown instruction %s\n",
 			info->line, info->command[0]);
+	free(info->command);
 	freeStack();
+	freeMem();
 	exit(EXIT_FAILURE);
 }
 
