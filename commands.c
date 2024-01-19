@@ -167,7 +167,7 @@ void swap(stack_t **stack, unsigned int line_number)
 		exit(EXIT_FAILURE);
 	}
 
-
+	current = *stack;
 	temp = current->n;
 	if (info->mode == 's')
 	{
