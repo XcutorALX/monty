@@ -38,11 +38,15 @@ void arit(stack_t **stack, unsigned int line_number)
 		result = current->prev->n - current->n;
 	else if (strcmp(operation, "div") == 0)
 	{
-		fprintf(stderr, "L%u: division by zero\n",
+		if (current->n == 0)
+		{
+			fprintf(stderr, "L%u: division by zero\n",
 				line_number);
-		freeMem();
-		freeStack();
-		exit(EXIT_FAILURE);
+			freeMem();
+			freeStack();
+			exit(EXIT_FAILURE);
+		}
+		result = current->prev->n / current->n;
 	}
 	else if (strcmp(operation, "mod") == 0)
 		result = current->prev->n % current->n;
