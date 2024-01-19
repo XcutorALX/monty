@@ -13,6 +13,7 @@ void pint(stack_t **stack, unsigned int line_number)
 	if (*stack == NULL)
 	{
 		fprintf(stderr, "L%u: can't pint, stack empty\n", line_number);
+		freeMem();
 		exit(EXIT_FAILURE);
 	}
 
@@ -32,7 +33,6 @@ void pop(stack_t **stack, unsigned int line_number)
 	if (*stack == NULL)
 	{
 		fprintf(stderr, "L%u: can't pop an empty stack\n", line_number);
-		freeStack();
 		freeMem();
 		exit(EXIT_FAILURE);
 	}
@@ -53,9 +53,15 @@ void pop(stack_t **stack, unsigned int line_number)
 	}
 
 	if (info->mode == 's')
+	{
 		current->prev->next = NULL;
+		*stack = current->prev;
+	}
 	else
+	{
 		current->next->prev = NULL;
+		*stack = current->next;
+	}
 	free(current);
 }
 
@@ -73,7 +79,6 @@ void pall(stack_t **stack, unsigned int line_number)
 	if (info->command == NULL)
 	{
 		fprintf(stderr, "Error: L%u\n", line_number);
-		freeStack();
 		freeMem();
 		exit(EXIT_FAILURE);
 	}
@@ -110,7 +115,6 @@ void push(stack_t **stack, unsigned int line_number)
 	if (info->errorno == -1)
 	{
 		fprintf(stderr, "L%u: usage: push integer\n", line_number);
-		freeStack();
 		freeMem();
 		exit(EXIT_FAILURE);
 	}
@@ -162,7 +166,6 @@ void swap(stack_t **stack, unsigned int line_number)
 	{
 		fprintf(stderr, "L%u: can't swap, stack too short\n",
 				line_number);
-		freeStack();
 		freeMem();
 		exit(EXIT_FAILURE);
 	}

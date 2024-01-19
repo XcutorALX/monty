@@ -33,7 +33,6 @@ int main(int argc, char **argv)
 	info->mode = 's';
 
 	readCode(info);
-	freeStack();
 	freeMem();
 	return (0);
 }

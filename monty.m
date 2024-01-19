@@ -1,4 +1,7 @@
-push 98
-push 402
-swap Holberton
+push 1
+push 2
+push 3
+pint
+swap
+pop
 pall

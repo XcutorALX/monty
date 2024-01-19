@@ -193,6 +193,7 @@ void freeMem(void)
 	if (info->allocatedMem == NULL)
 		return;
 
+	freeStack();
 	current = info->allocatedMem;
 
 	while (current != NULL)
