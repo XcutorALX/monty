@@ -1,4 +1,2 @@
-push 98
-push 402
-add Holberton
-pall
+push 128
+pchar
