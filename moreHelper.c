@@ -10,7 +10,7 @@ void freeStack(void)
 {
 	stack_t *current, *temp;
 
-	current = info->programStack;
+	current = info->stack;
 
 	if (current == NULL)
 		return;

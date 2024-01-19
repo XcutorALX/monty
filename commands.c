@@ -10,19 +10,13 @@
 
 void pint(stack_t **stack, unsigned int line_number)
 {
-	stack_t *current;
-
 	if (*stack == NULL)
 	{
 		fprintf(stderr, "L%u: can't pint, stack empty\n", line_number);
 		exit(EXIT_FAILURE);
 	}
 
-	current  = *stack;
-	while (current->next != NULL)
-		current = current->next;
-
-	printf("%d\n", current->n);
+	printf("%d\n", (*stack)->n);
 }
 
 /**
@@ -45,17 +39,23 @@ void pop(stack_t **stack, unsigned int line_number)
 
 	current = *stack;
 
-	while (current->next != NULL)
-		current = current->next;
-
-	if (current->prev == NULL)
+	if (current->prev == NULL && info->mode == 's')
+	{
+		free(current);
+		*stack = NULL;
+		return;
+	}
+	else if (info->mode == 'q' && current->next == NULL)
 	{
 		free(current);
 		*stack = NULL;
 		return;
 	}
 
-	current->prev->next = NULL;
+	if (info->mode == 's')
+		current->prev->next = NULL;
+	else
+		current->next->prev = NULL;
 	free(current);
 }
 
@@ -82,14 +82,14 @@ void pall(stack_t **stack, unsigned int line_number)
 		return;
 
 	current = *stack;
-
-	while (current->next != NULL)
-		current = current->next;
-
 	while (current != NULL)
 	{
 		printf("%d\n", current->n);
-		current = current->prev;
+		
+		if (info->mode == 's')
+			current = current->prev;
+		else
+			current = current->next;
 	}
 }
 
@@ -129,10 +129,11 @@ void push(stack_t **stack, unsigned int line_number)
 	}
 
 	current = *stack;
-	while (current->next != NULL)
-		current = current->next;
 	new->prev = current;
 	current->next = new;
+
+	if (info->mode == 's')
+		*stack = new;
 }
 
 /**
@@ -148,9 +149,14 @@ void swap(stack_t **stack, unsigned int line_number)
 	int i, temp;
 
 	current = *stack;
-	for (i = 1; *stack != NULL && current->next != NULL;
-			current = current->next, i++)
-		;
+	for (i = 0; *stack != NULL && current != NULL; i++)
+	{
+		if (info->mode == 's')
+			current = current->prev;
+		else
+			current = current->next;
+	}
+
 
 	if (i < 2)
 	{
@@ -161,7 +167,16 @@ void swap(stack_t **stack, unsigned int line_number)
 		exit(EXIT_FAILURE);
 	}
 
+
 	temp = current->n;
-	current->n = current->prev->n;
-	current->prev->n = temp;
+	if (info->mode == 's')
+	{
+		current->n = current->prev->n;
+		current->prev->n = temp;
+	}
+	else
+	{
+		current->n = current->next->n;
+		current->next->n = temp;
+	}
 }

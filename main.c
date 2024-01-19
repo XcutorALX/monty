@@ -27,10 +27,10 @@ int main(int argc, char **argv)
 
 	info->command = NULL;
 	info->args = argv;
-	info->programStack = NULL;
-	info->programQueue = NULL;
+	info->stack = NULL;
 	info->allocatedMem = NULL;
 	info->currentStream = NULL;
+	info->mode = 's';
 
 	readCode(info);
 	freeStack();

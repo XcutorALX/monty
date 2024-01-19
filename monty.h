@@ -65,9 +65,9 @@ typedef struct info_s
 {
 	char **command;
 	char **args;
-	stack_t *programStack;
-	stack_t *programQueue;
+	stack_t *stack;
 	allocated_t *allocatedMem;
+	char mode;
 	int errorno;
 	unsigned int line;
 	FILE *currentStream;
@@ -82,6 +82,7 @@ void pint(stack_t **stack, unsigned int line_number);
 void pop(stack_t **stack, unsigned int line_number);
 void swap(stack_t **stack, unsigned int line_number);
 void arit(stack_t **stack, unsigned int line_number);
+void pchar(stack_t **stack, unsigned int line_number);
 int runCommand(info_t *info);
 int readCode(info_t *info);
 int getLine(char **lineptr, size_t *buffersize, FILE *stream);

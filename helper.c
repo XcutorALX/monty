@@ -76,6 +76,7 @@ int runCommand(info_t *info)
 		{"div", &arit},
 		{"mul", &arit},
 		{"mod", &arit},
+		{"pchar", &pchar},
 		{NULL}
 	};
 
@@ -86,7 +87,7 @@ int runCommand(info_t *info)
 			return (0);
 		else if (strcmp(info->command[0], commands[i].opcode) == 0)
 		{
-			commands[i].f(&(info->programStack), info->line);
+			commands[i].f(&(info->stack), info->line);
 			return (0);
 		}
 	}
