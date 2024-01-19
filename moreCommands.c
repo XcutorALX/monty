@@ -40,7 +40,7 @@ void arit(stack_t **stack, unsigned int line_number)
 		fprintf(stderr, "L%u: division by zero\n",
 				line_number);
 		freeMem();
-		freeStack()
+		freeStack();
 		exit(EXIT_FAILURE);
 	}
 	else if (strcmp(operation, "mod") == 0)
