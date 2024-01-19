@@ -25,7 +25,7 @@ int readCode(info_t *info)
 	if (stream == NULL)
 	{
 		fprintf(stderr, "Error: Can't open file %s\n", info->args[1]);
-		freeStack();
+		freeMem();
 		exit(EXIT_FAILURE);
 	}
 
@@ -93,7 +93,6 @@ int runCommand(info_t *info)
 	}
 	fprintf(stderr, "L%d: unknown instruction %s\n",
 			info->line, info->command[0]);
-	freeStack();
 	freeMem();
 	exit(EXIT_FAILURE);
 }
