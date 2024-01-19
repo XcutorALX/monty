@@ -81,7 +81,8 @@ int runCommand(info_t *info)
 
 	for (i = 0; commands[i].opcode != NULL; i++)
 	{
-		if (strcmp(info->command[0], "nop") == 0)
+		if (strcmp(info->command[0], "nop") == 0 ||
+				info->command[0][0] == 0)
 			return (0);
 		else if (strcmp(info->command[0], commands[i].opcode) == 0)
 		{
