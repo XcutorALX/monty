@@ -71,8 +71,10 @@ int runCommand(info_t *info)
 		{"pint", &pint},
 		{"pop", &pop},
 		{"swap", &swap},
-		{"add", &add},
-		{"sub", &sub},
+		{"add", &arit},
+		{"sub", &arit},
+		{"div", &arit},
+		{"mul", &arit},
 		{NULL}
 	};
 
