@@ -48,3 +48,81 @@ void rotr(stack_t **stack, unsigned int line_number)
 		*stack = bottom;
 	}
 }
+
+/**
+ * stack - sets the format of the data to a stack (LIFO)
+ *
+ * @stack: the current stack
+ * @line_number: the current line
+ */
+
+void stack(stack_t **stack, unsigned int line_number)
+{
+	stack_t *bottom, *temp, *prev;
+
+	if (line_number <= 0)
+		return;
+
+	if (info->mode == 's')
+		return;
+
+	info->mode = 's';
+	if (*stack == NULL)
+		return;
+
+        for (bottom = *stack; bottom->next != NULL;
+			bottom = bottom->next)
+		;
+
+	temp = NULL;
+	prev = NULL;
+	while (bottom != NULL)
+	{
+		temp = bottom;
+		bottom = bottom->prev;
+		temp->next = (bottom != NULL) ? bottom : NULL;
+		temp->prev = prev;
+		prev = temp;
+
+	}
+	*stack = temp;
+	
+}
+
+/**
+ * queue - sets the format of the data to a queue (FIFO)
+ *
+ * @stack: the current stack
+ * @line_number: the current line
+ */
+
+void queue(stack_t **stack, unsigned int line_number)
+{
+        stack_t *bottom, *temp, *prev;
+
+	if (line_number <= 0)
+		return;
+
+	if (info->mode == 'q')
+		return;
+
+	info->mode = 'q';
+	if (*stack == NULL)
+		return;
+
+	for (bottom = *stack; bottom->prev != NULL;
+			bottom = bottom->prev)
+		;
+
+	temp = NULL;
+	prev = NULL;
+	while (bottom != NULL)
+	{
+		temp = bottom;
+		bottom = bottom->next;
+		temp->prev = (bottom != NULL) ? bottom : NULL;
+		temp->next = prev;
+		prev = temp;
+	}
+	*stack = temp;
+}

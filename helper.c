@@ -80,6 +80,8 @@ int runCommand(info_t *info)
 		{"pstr", &pstr},
 		{"rotl", &rotl},
 		{"rotr", &rotr},
+		{"stack", &stack},
+		{"queue", &queue},
 		{NULL}
 	};
 

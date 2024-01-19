@@ -133,11 +133,17 @@ void push(stack_t **stack, unsigned int line_number)
 	}
 
 	current = *stack;
-	new->prev = current;
-	current->next = new;
 
 	if (info->mode == 's')
 		*stack = new;
+	else
+	{
+		while (current->next != NULL)
+			current = current->next;
+	}
+
+	new->prev = current;
+	current->next = new;
 }
 
 /**
