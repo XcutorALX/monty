@@ -136,22 +136,31 @@ void push(stack_t **stack, unsigned int line_number)
 }
 
 /**
- * freeStack - frees the stack
+ * swap - swaps the top two elements of the stack
+ *
+ * @line_number: the current line
+ * @stack: the program stack
  */
 
-void freeStack(void)
+void swap(stack_t **stack, unsigned int line_number)
 {
-	stack_t *current, *temp;
+	stack_t *current;
+	int i, temp;
 
-	current = info->programStack;
+	current = *stack
+	for (i = 1; current->next != NULL; 
+			current = current->next, i++);
 
-	if (current == NULL)
-		return;
-
-	while (current != NULL)
+	if (i < 2)
 	{
-		temp = current;
-		current = current->next;
-		free(temp);
+		fprintf(stderr, "L%u: can't swap, stack too short\n",
+				line_number);
+		freeStack();
+		freeMem();
+		exit(EXIT_FAILURE);
 	}
+
+	temp = current->n;
+	current->n = current->prev->n;
+	current->prev->n = temp;
 }
