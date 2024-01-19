@@ -146,9 +146,9 @@ void swap(stack_t **stack, unsigned int line_number)
 {
 	stack_t *current;
 	int i, temp;
-
+		
 	current = *stack;
-	for (i = 0; current != NULL; 
+	for (i = 0; *stack != NULL && current->next != NULL; 
 			current = current->next, i++);
 
 	if (i < 2)
