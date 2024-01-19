@@ -85,7 +85,7 @@ void pall(stack_t **stack, unsigned int line_number)
 	while (current != NULL)
 	{
 		printf("%d\n", current->n);
-		
+
 		if (info->mode == 's')
 			current = current->prev;
 		else

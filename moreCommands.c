@@ -17,8 +17,8 @@ void arit(stack_t **stack, unsigned int line_number)
 	int result, i;
 	char *operation;
 
-	operation = info->command[0];
 	current = *stack;
+	operation = info->command[0];
 	for (i = 0; *stack != NULL && current != NULL; i++)
 	{
 		if (info->mode == 's')
@@ -36,51 +36,65 @@ void arit(stack_t **stack, unsigned int line_number)
 		exit(EXIT_FAILURE);
 	}
 
-	current = *stack;
+	result = aritHelper(&second);
 	if (info->mode == 's')
-		second = current->prev;
+		second->next = NULL;
 	else
-		second = current->next;
-	
+		second->prev = NULL;
+	second->n = result;
+	*stack = second;
+	free(current);
+}
 
+/**
+ * aritHelper - breaks down the arithmetic process
+ *
+ * @second: a pointer to the second element on the stack
+ *
+ * Return: returns the result from the arithmetic process
+ */
+
+int aritHelper(stack_t **second)
+{
+	stack_t *current;
+	char *operation;
+	int result;
+
+	operation = info->command[0];
+	current = info->stack;
+	if (info->mode == 's')
+		*second = current->prev;
+	else
+		*second = current->next;
 	if (strcmp(operation, "add") == 0)
-		result = second->n + current->n;
+		result = (*second)->n + current->n;
 	else if (strcmp(operation, "sub") == 0)
-		result = second->n - current->n;
+		result = (*second)->n - current->n;
 	else if (strcmp(operation, "div") == 0)
 	{
 		if (current->n == 0)
 		{
 			fprintf(stderr, "L%u: division by zero\n",
-				line_number);
+				info->line);
 			freeMem();
-			freeStack();
 			exit(EXIT_FAILURE);
 		}
-		result = second->n / current->n;
+		result = (*second)->n / current->n;
 	}
 	else if (strcmp(operation, "mod") == 0)
 	{
 		if (current->n == 0)
 		{
 			fprintf(stderr, "L%u: division by zero\n",
-					line_number);
+					info->line);
 			freeMem();
-			freeStack();
 			exit(EXIT_FAILURE);
 		}
-		result = second->n % current->n;
+		result = (*second)->n % current->n;
 	}
 	else if (strcmp(operation, "mul") == 0)
-		result = second->n * current->n;
-
-	second->n = result;
-
-	if (info->mode == 's')
-		second->next = NULL;
-	else
-		second->prev = NULL;
-	free(current);
+		result = (*second)->n * current->n;
+	return (result);
 }
 
 /**
