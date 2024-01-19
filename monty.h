@@ -70,6 +70,8 @@ typedef struct info_s
 	allocated_t *allocatedMem;
 	int errorno;
 	unsigned int line;
+	FILE *currentStream;
+
 } info_t;
 
 extern info_t *info;
@@ -85,5 +87,7 @@ char **tokenize(char *str, char *delim);
 int _atoi(char *str);
 int _pow(long int x, long int y);
 void freeStack(void);
+void addMem(void *ptr);
+void freeMem();
 
 #endif

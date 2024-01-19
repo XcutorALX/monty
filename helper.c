@@ -24,24 +24,33 @@ int readCode(info_t *info)
 
 	if (stream == NULL)
 	{
-		fprintf(stderr, "Error: Can't open file: %s\n", info->args[1]);
+		fprintf(stderr, "Error: Can't open file %s\n", info->args[1]);
 		freeStack();
 		exit(EXIT_FAILURE);
 	}
 
+	info->currentStream = stream;
 	while (getLine(&lineptr, &n, stream) != -1)
 	{
 		info->command = tokenize(lineptr, delim);
 		info->line = line;
 
 		if (info->command != NULL)
+		{
+			addMem(lineptr);
 			runCommand(info);
+			free(info->command);
+			info->command = NULL;
+		}
+		else
+			free(lineptr);
 
-		free(lineptr);
 		lineptr = NULL;
 		n = 0;
 		line++;
 	}
+	if (lineptr != NULL)
+		free(lineptr);
 	return (0);
 }
 
@@ -72,93 +81,10 @@ int runCommand(info_t *info)
 			return (0);
 		}
 	}
-	fprintf(stderr, "L%d: unknown instruction %s", info->line, info->command[0]);
+	fprintf(stderr, "L%d: unknown instruction %s\n",
+			info->line, info->command[0]);
 	freeStack();
 	exit(EXIT_FAILURE);
-}
-
-/**
- * push - pushes an element onto the stack
- *
- * @line_number: the current line
- * @stack: program stack
- */
-
-void push(stack_t **stack, unsigned int line_number)
-{
-	stack_t *current, *new;
-	int argument, i;
-
-	info->errorno = 0;
-	if (info->command[1] == NULL)
-	{
-		fprintf(stderr, "L%u: usage: push integer\n", line_number);
-		freeStack();
-		exit(EXIT_FAILURE);
-	}
-
-	for (i = 0; info->command[1][i] != '\0'; i++)
-	{
-		if (!(info->command[1][i] >= '0' && info->command[1][i] <= '9'))
-		{
-			fprintf(stderr, "L%u: usage: push integer\n", line_number);
-			freeStack();
-			exit(EXIT_FAILURE);
-		}
-	}
-
-	argument = atoi(info->command[1]);
-	new = malloc(sizeof(stack_t));
-	if (!new)
-		exit(EXIT_FAILURE);
-	new->n = argument;
-	new->next = NULL;
-	new->prev = NULL;
-
-	if (*stack == NULL)
-	{
-		*stack = new;
-		return;
-	}
-
-	current = *stack;
-	while (current->next != NULL)
-		current = current->next;
-	new->prev = current;
-	current->next = new;
-}
-
-/**
- * pall - prints all values on stack
- *
- * @stack: the current stack
- * @line_number: the current line being executed
- */
-
-void pall(stack_t **stack, unsigned int line_number)
-{
-	stack_t *current;
-
-	if (info->command == NULL)
-	{
-		fprintf(stderr, "Error: L%u\n", line_number);
-		freeStack();
-		exit(EXIT_FAILURE);
-	}
-
-	if (*stack == NULL)
-		return;
-
-	current = *stack;
-
-	while (current->next != NULL)
-		current = current->next;
-
-	while (current != NULL)
-	{
-		printf("%d\n", current->n);
-		current = current->prev;
-	}
 }
 
 /**
@@ -178,7 +104,7 @@ int getLine(char **lineptr, size_t *bufferSize, FILE *stream)
 	size_t i = 0;
 	int c;
 
-	if (!(*lineptr))
+	if ((*lineptr) == NULL)
 	{
 		*bufferSize = 1024;
 		*lineptr = malloc(*bufferSize * sizeof(char));
@@ -213,4 +139,56 @@ int getLine(char **lineptr, size_t *bufferSize, FILE *stream)
 	*lineptr = realloc(*lineptr, *bufferSize * sizeof(char));
 	(*lineptr)[i] = '\0';
 	return (i);
+}
+
+/**
+ * addMem - adds an address to the list of dynamically allocated memory
+ *
+ * @ptr: the address to add to the list
+ */
+
+void addMem(void *ptr)
+{
+	allocated_t *temp, *current;
+
+	temp = malloc(sizeof(allocated_t));
+	temp->address = ptr;
+	temp->next = NULL;
+
+	if (info->allocatedMem == NULL)
+	{
+		info->allocatedMem = temp;
+		return;
+	}
+
+	current = info->allocatedMem;
+	while (current->next != NULL)
+		current = current->next;
+
+	current->next = temp;
+
+}
+
+/**
+ * freeMem - frees all dynamically allocated memory
+ */
+
+void freeMem(void)
+{
+	allocated_t *current, *temp;
+
+	if (info->currentStream != NULL)
+		fclose(info->currentStream);
+	if (info->allocatedMem == NULL)
+		return;
+
+	current = info->allocatedMem;
+
+	while (current != NULL)
+	{
+		temp = current;
+		current = current->next;
+		free(temp->address);
+		free(temp);
+	}
 }

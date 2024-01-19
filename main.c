@@ -30,8 +30,10 @@ int main(int argc, char **argv)
 	info->programStack = NULL;
 	info->programQueue = NULL;
 	info->allocatedMem = NULL;
+	info->currentStream = NULL;
 
 	readCode(info);
 	freeStack();
+	freeMem();
 	return (0);
 }

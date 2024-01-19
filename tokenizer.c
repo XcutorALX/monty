@@ -24,7 +24,10 @@ char **tokenize(char *str, char *delim)
 		exit(EXIT_FAILURE);
 	split[0] = strtok(str, delim);
 	if (split[0] == NULL)
+	{
+		free(split);
 		return (NULL);
+	}
 	for (count = 1; (buffer = strtok(NULL, delim)) != NULL
 			&& *buffer != '\0'; count++)
 	{
