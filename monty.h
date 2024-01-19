@@ -81,6 +81,7 @@ void pall(stack_t **stack, unsigned int line_number);
 void pint(stack_t **stack, unsigned int line_number);
 void pop(stack_t **stack, unsigned int line_number);
 void swap(stack_t **stack, unsigned int line_number);
+void add(stack_t **stack, unsigned int line_number);
 int runCommand(info_t *info);
 int readCode(info_t *info);
 int getLine(char **lineptr, size_t *buffersize, FILE *stream);
