@@ -70,6 +70,7 @@ int runCommand(info_t *info)
 		{"pall", &pall},
 		{"pint", &pint},
 		{"pop", &pop},
+		{"swap", &swap},
 		{NULL}
 	};
 
