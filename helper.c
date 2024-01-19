@@ -72,6 +72,7 @@ int runCommand(info_t *info)
 		{"pop", &pop},
 		{"swap", &swap},
 		{"add", &add},
+		{"sub", &sub},
 		{NULL}
 	};
 
