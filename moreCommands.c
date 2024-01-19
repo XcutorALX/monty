@@ -125,3 +125,31 @@ void pchar(stack_t **stack, unsigned int line_number)
 	freeMem();
 	exit(EXIT_FAILURE);
 }
+
+/**
+ * pstr - prints the string starting at the top of the stack
+ *
+ * @stack: the current stack
+ * @line_number: current line number
+ */
+
+void pstr(stack_t **stack, unsigned int line_number)
+{
+	stack_t *current;
+
+	current = *stack;
+
+	if (line_number <= 0)
+		return;	
+
+	while (current != NULL && 
+		(current->n > 0 && current->n <= 127))
+	{
+		printf("%c", current->n);
+		if (info->mode == 's')
+			current = current->prev;
+		else
+			current = current->next;
+	}
+	printf("\n");
+}
