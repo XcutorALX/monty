@@ -13,19 +13,20 @@
 
 void arit(stack_t **stack, unsigned int line_number)
 {
-        stack_t *current;
-        int result, i;
+	stack_t *current;
+	int result, i;
 	char *operation;
 
 	operation = info->command[0];
-        current = *stack;
-        for (i = 1; *stack != NULL && current->next != NULL;
-                        current = current->next, i++);
+	current = *stack;
+	for (i = 1; *stack != NULL && current->next != NULL;
+			current = current->next, i++)
+		;
 
 	if (i < 2)
 	{
 		fprintf(stderr, "L%u: can't %s, stack too short\n",
-                                line_number, operation);
+				line_number, operation);
 		freeStack();
 		freeMem();
 		exit(EXIT_FAILURE);
